@@ -79,7 +79,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
         }
     }
 
-    bool doScroll = set_scrolling || host_keyboard_led_state().caps_lock|| host_keyboard_led_state().num_lock;
+    bool doScroll = set_scrolling;
 
 
     if (doScroll) {
