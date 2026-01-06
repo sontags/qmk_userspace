@@ -10,66 +10,6 @@
 #define HRM_L RALT_T(KC_L)
 #define HRM_SCLN RSFT_T(KC_SCLN)
 
-// Tap dance declarations
-enum {
-    TD_SPC_MOUSE,
-};
-
-// Tap dance state tracking
-typedef enum {
-    TD_NONE,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
-    TD_DOUBLE_HOLD,
-} td_state_t;
-
-static td_state_t td_state = TD_NONE;
-
-td_state_t cur_dance(tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (!state->pressed) return TD_SINGLE_TAP;
-        else return TD_SINGLE_HOLD;
-    } else if (state->count == 2) {
-        if (state->pressed) return TD_DOUBLE_HOLD;
-    }
-    return TD_NONE;
-}
-
-void td_spc_mouse_finished(tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            tap_code(KC_SPC);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_on(3);
-            break;
-        case TD_DOUBLE_HOLD:
-            register_code(KC_SPC);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_spc_mouse_reset(tap_dance_state_t *state, void *user_data) {
-    switch (td_state) {
-        case TD_SINGLE_HOLD:
-            layer_off(3);
-            break;
-        case TD_DOUBLE_HOLD:
-            unregister_code(KC_SPC);
-            break;
-        default:
-            break;
-    }
-    td_state = TD_NONE;
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_SPC_MOUSE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_spc_mouse_finished, td_spc_mouse_reset),
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x5_3_ex2(
         KC_Q,    KC_W,    KC_E,    KC_R,        KC_T,        KC_NO,
@@ -78,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   LT(4,KC_H),  HRM_J,   HRM_K,   HRM_L,       HRM_SCLN,
         KC_Z,         KC_X,         KC_C,         KC_V,         KC_B,
                       KC_N,         KC_M,         KC_COMM,      KC_DOT,       KC_SLSH,
-                      KC_NO,        MO(1),        TD(TD_SPC_MOUSE),
+                      KC_NO,        MO(1),        LT(3,KC_SPC),
                       KC_ENT,       MO(2),        KC_NO
     ),
     [1] = LAYOUT_split_3x5_3_ex2(

@@ -1,6 +1,6 @@
 # Sontags Keymap for Lily58
 
-A QWERTY layout with home-row mods and tap dance for the Lily58 split keyboard.
+A QWERTY layout with home-row mods for the Lily58 split keyboard.
 
 ## Build Commands
 
@@ -51,10 +51,7 @@ qmk config user.overlay_dir="/path/to/qmk_userspace"
 
 - `G` and `H`: Tap for letter, hold for Layer 4
 
-**Tap Dance (Space key):**
-- Single tap: Space
-- Single hold: Activate Layer 3 (Mouse)
-- Double hold: Hold Space (for repeating)
+**Space key** (layer-tap): Tap for Space, hold for Layer 3 (Mouse). Double-tap and hold for repeating space (via `QUICK_TAP_TERM`).
 
 ### Layer 0: Base (DVORAK Visualization)
 
@@ -108,7 +105,7 @@ For users familiar with DVORAK, this is what you type:
 
 ### Layer 3: Mouse Keys
 
-Activated by holding the tap-dance Space key.
+Activated by holding the Space key.
 
 ```
 ┌─────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────┐
@@ -147,9 +144,8 @@ Activated by holding `G` or `H` on the base layer.
 ## Configuration
 
 - **Tapping term**: 200ms
-- **Quick tap term**: 200ms
+- **Quick tap term**: 200ms (enables double-tap-hold for key repeat)
 - **Permissive hold**: Enabled
-- **Tap dance**: Enabled
 - **Mouse keys**: Enabled
 - **OLED display**: Enabled
 - **LTO**: Enabled (smaller firmware size)
